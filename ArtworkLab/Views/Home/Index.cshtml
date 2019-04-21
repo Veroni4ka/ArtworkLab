@@ -2,30 +2,50 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <img src="~/Content/header.png" style="margin-top:30px;" />
+    <h1>Welcome to <strong>artworks</strong></h1>
+    <div>Use the <a target="_new" href="https://southcentralus.dev.cognitive.microsoft.com/docs/services/eb68250e4e954d9bae0c2650db79c653/operations/58acd3c1ef062f0344a42814">Microsoft Custom Vision Service Prediction API</a> to analyze and predict the original artist of famous paintings.</div>
+
+    <div class="stepLabel">step one</div>
+    <div><strong>Browse (...)</strong> to find an image on your local file system.</div>
+    <input type="button" id="select_button" value="..." />
+    <input id="file_input" type="file" name="fileInput" style="display: none;" />
+    <img id="img_preview" alt="image preview" />
+
+    <div id="previewImage"></div>
+    <div id="analysisResults"></div>
+    <div class="stepLabel">step two</div>
+    <div>Click <strong>Predict</strong> to view artist predictions.</div>
+    <input type="submit" id="analyze_button" value="Predict" />
+
+}
+
+    @if (Model != null)
+    {
+        <img alt="result image" src="@string.Concat("../TestImages/" + Session["img"])" />
+        <h1>@Model</h1>
+    }
+
+    <script>
+        $('#select_button').on('click', function () {
+            $('#file_input').trigger('click');
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img_preview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file_input").change(function () {
+            readURL(this);
+        });
+    </script>
