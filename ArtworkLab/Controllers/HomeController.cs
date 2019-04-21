@@ -12,8 +12,8 @@ namespace ArtworkLab.Controllers
 {
     public class HomeController : Controller
     {
-        private static string url = "https://eastus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/e040674c-b4ba-452b-832d-795e1e03a1a7/classify/iterations/Iteration2/image";
-        private static string predictionKey = "8197d29258b34dadb0e5557036ff96fb";
+        private static string url = "PREDICTION_ENDPOINT";
+        private static string predictionKey = "PREDICTION_KEY";
 
         [HttpGet]
         public ActionResult Index()
